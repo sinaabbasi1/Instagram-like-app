@@ -5,5 +5,5 @@ from post.models import Post,Tag, Follow
 admin.site.register(Tag)
 admin.site.register(Post)
 admin.site.register(Follow)
-admin.site.register(Stream)
+# admin.site.register(Stream)
 

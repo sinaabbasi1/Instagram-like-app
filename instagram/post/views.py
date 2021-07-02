@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from post.models import Stream, Post, Tag
 from django.template import loader
@@ -24,6 +24,16 @@ def index(request):
 		'post_items': post_items,
 	}
 	return HttpResponse(template.render(context, request))
+
+@login_required
+def PostDetails(request, post_id):
+	post = get_object_or_404(Post, id=post_id)
+	template = loader.get_template('post_detail.html')
+	context = {
+		'post': post,
+	}
+	return HttpResponse(template.render(context, request))
+
 
 
 @login_required
@@ -63,3 +73,4 @@ def NewPost(request):
 	}
 
 	return render(request, 'newpost.html', context)
+

@@ -62,7 +62,7 @@ class Stream(models.Model):
     		stream = Stream(post=post, user=follower.follower, date=post.posted, following=user)
     		stream.save()
 
-post_save.connect(Likes.user_liked_post, sender=Likes)
+post_save.connect(Stream.add_post, sender=Post)
 
 
 

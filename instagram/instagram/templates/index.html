@@ -35,12 +35,21 @@
                                 <time datetime="2016-1-1">{{ post_item.posted }}</time>
                             </div>
                         </div>
-                    </div>
 
+                <div class="content">
+                    {{ post_item.caption }}
+                    <p>{% for tag in post_item.tags.all %}<a href="{{ tag.get_absolute_url }}">#{{ tag }}</a>{% endfor
+                        %}</p>
                     <br>
-	{% endfor %}
-                    
-
+                    <time datetime="2016-1-1">{{ post_item.posted }}</time>
                 </div>
             </div>
-	{% endblock %}
+        </div>
+
+        <br>
+        {% endfor %}
+
+
+    </div>
+</div>
+{% endblock %}

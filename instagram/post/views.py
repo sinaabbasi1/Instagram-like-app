@@ -8,7 +8,7 @@ from django.urls import reverse
 
 from post.models import Post, Stream, Tag, Likes
 from comment.models import Comment
-
+from authy.models import Profile
 from post.forms import NewPostForm
 from comment.forms import CommentForm
 
@@ -30,11 +30,23 @@ def index(request):
 	}
 	return HttpResponse(template.render(context, request))
 
-@login_required
+
 def PostDetails(request, post_id):
 	post = get_object_or_404(Post, id=post_id)
+	user = request.user
+	profile = Profile.objects.get(user=user)
+	favorited = False
+
 	#comment
 	comments = Comment.objects.filter(post=post).order_by('date')
+	
+	if request.user.is_authenticated:
+		profile = Profile.objects.get(user=user)
+		#For the color of the favorite button
+
+		if profile.favorites.filter(id=post_id).exists():
+			favorited = True
+
 	#Comments Form
 	if request.method == 'POST':
 		form = CommentForm(request.POST)
@@ -46,12 +58,17 @@ def PostDetails(request, post_id):
 			return HttpResponseRedirect(reverse('postdetails', args=[post_id]))
 	else:
 		form = CommentForm()
-##############################################
 
 	template = loader.get_template('post_detail.html')
+
 	context = {
-		'post': post,
+		'post':post,
+		'favorited':favorited,
+		'profile':profile,
+		'form':form,
+		'comments':comments,
 	}
+
 	return HttpResponse(template.render(context, request))
 
 
@@ -126,5 +143,20 @@ def like(request, post_id):
 
 	post.likes = current_likes
 	post.save()
+
+	return HttpResponseRedirect(reverse('postdetails', args=[post_id]))
+
+
+@login_required
+def favorite(request, post_id):
+	user = request.user
+	post = Post.objects.get(id=post_id)
+	profile = Profile.objects.get(user=user)
+
+	if profile.favorites.filter(id=post_id).exists():
+		profile.favorites.remove(post)
+
+	else:
+		profile.favorites.add(post)
 
 	return HttpResponseRedirect(reverse('postdetails', args=[post_id]))

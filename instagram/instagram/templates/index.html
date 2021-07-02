@@ -27,14 +27,15 @@
                         <p class="subtitle is-6">@{{ post_item.user.username }}</p>
                         {{ post_item.caption }}
                         <p>{% for tag in post_item.tags.all %}<a href="{{ tag.get_absolute_url }}">#{{ tag }}</a>
-                        {% endfor %}</p>
+                            {% endfor %}</p>
                         <br>
                         <time datetime="2016-1-1">{{ post_item.posted }}</time>
                     </div>
 
 
                     <div class="media-right">
-                        <a href="{% url 'postlike' post_item.id %}"><i class="material-icons has-text-danger">favorite</i></a>
+                        <a href="{% url 'postlike' post_item.id %}"><i
+                                class="material-icons has-text-danger">favorite</i></a>
                         <p>{{ post_item.likes}} Likes</p>
                     </div>
                 </div>
@@ -48,12 +49,11 @@
                 <time datetime="2016-1-1">{{ post_item.posted }}</time>
             </div>
         </div>
+
+
+        <br>
+        {% endfor %}
+
     </div>
-
-    <br>
-    {% endfor %}
-
-
-</div>
 </div>
 {% endblock %}

@@ -32,14 +32,26 @@
                     </div>
                 </div>
 
+
+                {% if favorited is True %}
                 <div class="media-right">
-                    <a href=""><i class="material-icons">save-alt</i></a>
-                    <p>Save post</p>
+                    <a href="{% url 'postfavorite' post.id %}"><i
+                            class="material-icons has-text-danger">save_alt</i></a>
+                    <p>Remove Post</p>
                 </div>
+                {% else %}
 
                 <div class="media-right">
-                    <a href="{% url 'postlike' post.id %}"><i class="material-icons">favorite</i></a>
-                    <p>{{ post.likes}} Likes</p>
+                    <a href="{% url 'postfavorite' post.id %}"><i
+                            class="material-icons has-text-success">save_alt</i></a>
+                    <p>Save Post</p>
+                </div>
+
+                {% endif %}
+
+                <div class="media-right">
+                    <a href="{% url 'postlike' post.id %}"><i class="material-icons has-text-danger">favorite</i></a>
+                    <p>{{ post.likes }} Likes</p>
                 </div>
 
 

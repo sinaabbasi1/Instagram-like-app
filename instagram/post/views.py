@@ -5,8 +5,12 @@ from django.http import HttpResponse, HttpResponseRedirect
 
 from django.urls import reverse
 # Create your views here.
+
 from post.models import Post, Stream, Tag, Likes
+from comment.models import Comment
+
 from post.forms import NewPostForm
+from comment.forms import CommentForm
 
 
 @login_required
@@ -29,6 +33,21 @@ def index(request):
 @login_required
 def PostDetails(request, post_id):
 	post = get_object_or_404(Post, id=post_id)
+	#comment
+	comments = Comment.objects.filter(post=post).order_by('date')
+	#Comments Form
+	if request.method == 'POST':
+		form = CommentForm(request.POST)
+		if form.is_valid():
+			comment = form.save(commit=False)
+			comment.post = post
+			comment.user = user
+			comment.save()
+			return HttpResponseRedirect(reverse('postdetails', args=[post_id]))
+	else:
+		form = CommentForm()
+##############################################
+
 	template = loader.get_template('post_detail.html')
 	context = {
 		'post': post,

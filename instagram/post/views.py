@@ -1,16 +1,19 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.contrib.auth.decorators import login_required
-from django.template import loader
 from django.http import HttpResponse, HttpResponseRedirect
+from django.template import loader
+
+from post.models import Stream, Post, Tag, Likes, PostFileContent
+from post.forms import NewPostForm
+
+from comment.models import Comment
+from comment.forms import CommentForm
+
+
+from django.contrib.auth.decorators import login_required
 
 from django.urls import reverse
-# Create your views here.
-
-from post.models import Post, Stream, Tag, Likes
-from comment.models import Comment
 from authy.models import Profile
-from post.forms import NewPostForm
-from comment.forms import CommentForm
+# Create your views here.
 
 
 @login_required
@@ -21,6 +24,7 @@ def index(request):
 
 	for post in posts:
 		group_ids.append(post.post_id)
+	
 	post_items = Post.objects.filter(id__in=group_ids).all().order_by('-posted')	
 
 	template = loader.get_template('index.html')	

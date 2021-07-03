@@ -25,9 +25,9 @@ urlpatterns = [
     path('post/', include('post.urls')),
     path('user/', include('authy.urls')),
     path('direct/', include('direct.urls')),
+    path('notifications/', include('notifications.urls')),
     path('<username>/', UserProfile, name='profile'),
     path('<username>/saved', UserProfile, name='profilefavorites'),
     path('<username>/follow/<option>', follow, name='follow'),
-    path('notifications/', include('notifications.urls')),
     
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

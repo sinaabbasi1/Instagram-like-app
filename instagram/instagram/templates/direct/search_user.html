@@ -40,8 +40,7 @@
       <div class="media-content">
         <div class="content">
           <p>
-            <strong>{{ user.profile.first_name }} {{ user.profile.last_name }}</strong><small>@{{ user.username
-              }}</small>
+            <strong>{{ user.profile.first_name }} {{ user.profile.last_name }}</strong><small>@{{ user.username }}</small>
           </p>
           <a href="{% url 'newconversation' user.username %}" class="button is-info">Send a message!</a>
         </div>

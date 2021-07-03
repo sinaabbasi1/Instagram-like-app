@@ -33,8 +33,7 @@
 
                                 <div class="content">
                                     <p>
-                                        <strong>{{ message.user.profile.first_name }} {{ message.user.profile.last_name
-                                            }}</strong> <small>@{{ message.user.username }}</small>
+                                        <strong>{{ message.user.profile.first_name }} {{ message.user.profile.last_name }}</strong> <small>@{{ message.user.username }}</small>
                                     </p>
                                 </div>
 
@@ -71,9 +70,7 @@
                     <div class="media-content">
                         <div class="content">
                             <p>
-                                <strong>{{ direct.sender.profile.first_name }} {{ direct.sender.profile.last_name
-                                    }}</strong> <small>@{{ direct.sender.username }}</small> on: <strong><small>{{
-                                        direct.date|date:'N d G:i'}}</small></strong>
+                                <strong>{{ direct.sender.profile.first_name }} {{ direct.sender.profile.last_name }}</strong> <small>@{{ direct.sender.username }}</small> on: <strong><small>{{ direct.date|date:'N d G:i' }}</small></strong>
                             </p>
                             {{ direct.body }}
                         </div>

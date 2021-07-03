@@ -49,6 +49,20 @@ class Post(models.Model):
 class Follow(models.Model):
 	follower = models.ForeignKey(User,on_delete=models.CASCADE, null=True, related_name='follower')
 	following = models.ForeignKey(User,on_delete=models.CASCADE, null=True, related_name='following')
+	def user_follow(sender, instance, *args, **kwargs):
+		follow = instance
+		sender = follow.follower
+		following = follow.following
+		notify = Notification(sender=sender, user=following, notification_type=3)
+		notify.save()
+
+	def user_unfollow(sender, instance, *args, **kwargs):
+		follow = instance
+		sender = follow.follower
+		following = follow.following
+
+		notify = Notification.objects.filter(sender=sender, user=following, notification_type=3)
+		notify.delete()
 
 class Stream(models.Model):
     following = models.ForeignKey(User, on_delete=models.CASCADE,null=True, related_name='stream_following')
@@ -91,3 +105,6 @@ post_save.connect(Stream.add_post, sender=Post)
 post_save.connect(Likes.user_liked_post, sender=Likes)
 post_delete.connect(Likes.user_unlike_post, sender=Likes)
 
+#Follow
+post_save.connect(Follow.user_follow, sender=Follow)
+post_delete.connect(Follow.user_unfollow, sender=Follow)

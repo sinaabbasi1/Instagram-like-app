@@ -36,3 +36,25 @@ def Inbox(request):
 	template = loader.get_template('direct/direct.html')
 
 	return HttpResponse(template.render(context, request))
+
+
+@login_required
+def Directs(request, username): # username because we clicked on each conversation
+	user = request.user
+	messages = Message.get_messages(user=user)
+	active_direct = username
+	directs = Message.objects.filter(user=user, recipient__username=username)
+	directs.update(is_read=True)
+	for message in messages:
+		if message['user'].username == username:
+			message['unread'] = 0
+
+	context = {
+		'directs': directs,
+		'messages': messages,
+		'active_direct':active_direct,
+	}
+
+	template = loader.get_template('direct/direct.html')
+
+	return HttpResponse(template.render(context, request))

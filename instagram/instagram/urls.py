@@ -22,7 +22,7 @@ from authy.views import UserProfile, UserProfileFavorites, follow
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('user/', include('post.urls')),
+    path('post/', include('post.urls')),
     path('user/', include('authy.urls')),
     path('direct/', include('direct.urls')),
     path('<username>/', UserProfile, name='profile'),

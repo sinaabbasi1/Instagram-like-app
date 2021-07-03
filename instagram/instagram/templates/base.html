@@ -112,7 +112,8 @@
 </body>
 
 <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-<script src="{% static 'js/init.js' %}"></script>
-<script src="{% static 'js/slider.js' %}"></script>
+  <script src="{% static 'js/init.js' %}"></script>
+  {% block script %}  
+  {% endblock %}
 
 </html>

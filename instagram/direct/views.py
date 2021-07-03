@@ -58,3 +58,16 @@ def Directs(request, username): # username because we clicked on each conversati
 	template = loader.get_template('direct/direct.html')
 
 	return HttpResponse(template.render(context, request))
+
+@login_required
+def SendDirect(request):
+	from_user = request.user
+	to_user_username = request.POST.get('to_user')
+	body = request.POST.get('body')
+	
+	if request.method == 'POST':
+		to_user = User.objects.get(username=to_user_username)
+		Message.send_message(from_user, to_user, body)
+		return redirect('inbox')
+	else:
+		HttpResponseBadRequest()

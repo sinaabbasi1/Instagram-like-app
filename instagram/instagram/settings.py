@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'authy',
     'post',
     'comment',
+    'notifications',
 
 ]
 

@@ -35,12 +35,15 @@ INSTALLED_APPS = [
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
+    'django.contrib.humanize',
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'authy',
     'post',
     'comment',
+    'notifications',
     'direct',
+
 ]
 
 MIDDLEWARE = [
@@ -66,6 +69,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                
+                'notifications.views.CountNotifications',
             ],
         },
     },

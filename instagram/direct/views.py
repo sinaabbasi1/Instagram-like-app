@@ -37,6 +37,26 @@ def Inbox(request):
 
 	return HttpResponse(template.render(context, request))
 
+@login_required
+def UserSearch(request):
+	query = request.GET.get("q")
+	context = {}
+	
+	if query:
+		users = User.objects.filter(Q(username__icontains=query))
+
+		#Pagination
+		paginator = Paginator(users, 6)
+		page_number = request.GET.get('page')
+		users_paginator = paginator.get_page(page_number)
+
+		context = {
+				'users': users_paginator,
+			}
+	
+	template = loader.get_template('direct/search_user.html')
+	
+	return HttpResponse(template.render(context, request))
 
 @login_required
 def Directs(request, username): # username because we clicked on each conversation
@@ -58,6 +78,18 @@ def Directs(request, username): # username because we clicked on each conversati
 	template = loader.get_template('direct/direct.html')
 
 	return HttpResponse(template.render(context, request))
+
+@login_required
+def NewConversation(request, username):
+	from_user = request.user
+	body = ''
+	try:
+		to_user = User.objects.get(username=username)
+	except Exception as e:
+		return redirect('usersearch')
+	if from_user != to_user:
+		Message.send_message(from_user, to_user, body)
+	return redirect('inbox')
 
 @login_required
 def SendDirect(request):

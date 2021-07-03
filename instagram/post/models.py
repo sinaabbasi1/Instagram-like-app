@@ -2,9 +2,11 @@ import uuid
 from django.db import models
 from django.contrib.auth.models import User
 
-from django.db.models.signals import post_save
+from django.db.models.signals import post_save, post_delete
 from django.utils.text import slugify
 from django.urls import reverse
+
+from notifications.models import Notification
 
 def user_directory_path(instance, filename):
     # file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
@@ -84,3 +86,8 @@ class Likes(models.Model):
 
 
 post_save.connect(Stream.add_post, sender=Post)
+
+#Likes
+post_save.connect(Likes.user_liked_post, sender=Likes)
+post_delete.connect(Likes.user_unlike_post, sender=Likes)
+

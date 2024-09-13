@@ -1,8 +1,5 @@
-# Instagram-like-app
+# Instagram-like Web Application in Django
 
-It is a copy of the [django_instagram_clone_youtube](https://github.com/byronlara5/django_instagram_clone_youtube) repository by [byronlara5](https://github.com/byronlara5) which he has created for his youtube Django beginner tutorial.
+This repository is a copy of the `django_instagram_clone_youtube` project created by [Byron Lara](https://github.com/byronlara5) for his YouTube Django beginner tutorial.
 
-I used it to learn about django with some of my classmates. I made a copy because I needed to follow the tutorials step by step. So please use its original code from the link below:
-
-https://github.com/byronlara5/django_instagram_clone_youtube
-
+I used this project to learn Django along with some of my classmates. I created this copy to follow the tutorial step-by-step. If you are interested, please refer to the [original repository](https://github.com/byronlara5/django_instagram_clone_youtube).
